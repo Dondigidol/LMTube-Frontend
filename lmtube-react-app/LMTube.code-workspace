@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "editor.minimap.enabled": false,
+    "html-css-class-completion.enableEmmetSupport": true,
+    "liveServer.settings.multiRootWorkspaceName": "templates"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "vue-html": "html",
+    "razor": "html",
+    "plaintext": "pug"
+  },
+  "emmet.syntaxProfiles": {
+    "javascript": "jsx",
+    "javascript": "html"
+  },
+  "emmet.excludeLanguages": ["markdown"],
+  "emmet.showSuggestionsAsSnippets": true,
+  "editor.snippetSuggestions": "top"
+}

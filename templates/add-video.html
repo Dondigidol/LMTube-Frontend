@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>LMTube - Мои видео</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/jquery-3.5.0.min.js"></script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="index.html">LMTube</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"
+              >Главная <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="add-video.html">Загрузить</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            onkeypress=""
+          />
+        </form>
+      </div>
+    </nav>
+    <div class="container">
+      <h3>Загрузка видео</h3>
+      <form method="POST">
+        <div class="form-group">
+          <label for="title">Название:</label>
+          <input class="form-control" type="text" name="title" id="title" />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Описание к видео:</label>
+          <textarea
+            class="form-control"
+            name="description"
+            id="description"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="videoFile">Видеофайл:</label>
+          <input
+            class="form-control-file"
+            type="file"
+            name="videoFile"
+            id="videoFile"
+            accept=".avi,.mov,.mkv,.mp4,.mpg"
+          />
+        </div>
+
+        <label for="resolutionsCheckBoxes">Разрешения конвертации:</label>
+        <div class="form-group" id="resolutionsCheckBoxes">
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="resolutions"
+              id="480"
+              value="480"
+              checked
+            />
+            <label class="form-check-label" for="480">720 x 480</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="resolutions"
+              value="720"
+              id="720"
+              checked
+            />
+            <label class="form-check-label" for="720">1280 x 720</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="resolutions"
+              value="1080"
+              id="1080"
+              checked
+            />
+            <label class="form-check-label" for="1080">1920 x 1080</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="posterFile">Постер:</label>
+          <input
+            class="form-control-file"
+            type="file"
+            name="posterFile"
+            id="posterFile"
+            placeholder="Выбирете постер"
+            accept=".png,.jpg,.bmp"
+          />
+        </div>
+
+        <div class="form-group">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="isCommented"
+              name="isCommented"
+            />
+            <label class="form-check-label" for="isCommented"
+              >возможность комментирования</label
+            >
+          </div>
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="isActive"
+              name="isActive"
+            />
+            <label class="form-check-label" for="isActive">актвировать</label>
+          </div>
+        </div>
+
+        <button class="btn btn-primary button-big" type="submit">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
