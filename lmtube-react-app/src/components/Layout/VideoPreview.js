@@ -12,9 +12,11 @@ class VideoPreview extends React.Component {
             <Poster posterId={this.props.posterId} alt={this.props.title} />
           </div>
           <p className="text-center font-weight-bold">{this.props.title}</p>
-          <div>Автор: </div>
-          <div>Загружен: {this.props.createdAt}</div>
-          <div>Просмотров: {this.props.views}</div>
+          <small className="muted">
+            <div>Автор: </div>
+            <div>Загружен: {this.props.createdAt}</div>
+            <div>Просмотров: {this.props.views}</div>
+          </small>
         </div>
       </Link>
     );

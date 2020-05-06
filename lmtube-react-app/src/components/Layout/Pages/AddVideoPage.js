@@ -79,7 +79,7 @@ class AddVideoPage extends Component {
       <div>
         <Header searching="false" />
         <div className="container">
-          <h4 className="display-4">Загрузка видео</h4>
+          <h4 className="display-4 text-center">Загрузка видео</h4>
           <form
             className="text-left col-8 offset-2"
             onSubmit={this.submitForm}

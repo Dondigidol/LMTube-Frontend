@@ -64,6 +64,7 @@ class VideoPage extends React.Component {
               preload="auto"
               poster={this.state.posterSrc}
               controls
+              autoPlay
               style={{
                 height: this.state.videoContainerWidth * 0.6,
                 width: this.state.videoContainerWidth,

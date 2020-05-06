@@ -21,14 +21,11 @@ function SearchField(props) {
 }
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      search: this.props.searching,
-      highlight: this.props.highlight,
-    };
-  }
+  state = {
+    search: this.props.searching,
+    highlight: this.props.highlight,
+    parent: this.props.parent,
+  };
 
   render() {
     const curPath = window.location.pathname;
@@ -53,7 +50,9 @@ class Header extends Component {
               </li>
             ))}
           </ul>
-          <SearchField enable={this.state.search} />
+          {
+            //<SearchField enable={this.state.search} />
+          }
         </div>
       </nav>
     );
