@@ -8,53 +8,33 @@ class MainPage extends React.Component {
 
     this.state = {
       videos: [],
-      mask: "",
     };
-
-    this.getVideos = this.getVideos.bind(this);
-    this.handleMask = this.handleMask.bind(this);
   }
 
   componentDidMount() {
-    this.getVideos();
+    this.getVideos("");
   }
 
-  handleMask(event) {
-    this.setState(
-      {
-        mask: event.target.value,
-      },
-      () => {
-        this.getVideos();
-      }
-    );
-  }
+  searchingVideo = (e) => {
+    e.preventDefault();
+    var mask = e.target.elements.mask.value;
+    this.getVideos(mask);
+  };
 
-  async getVideos() {
+  getVideos = async (mask) => {
     const api_url = await fetch(
-      `http://localhost:8080/lmtube/api/video/search?title=${this.state.mask}`
+      `http://localhost:8080/lmtube/api/video/search?title=${mask}`
     );
     const data = await api_url.json();
     this.setState({
       videos: data,
     });
-  }
+  };
 
   render() {
     return (
       <div>
-        <Header searching="true" />
-        <div className="form-group">
-          <form className="col-sm-12 col-lg-6 offset-lg-3 mt-2">
-            <input
-              type="text"
-              value={this.state.mask}
-              onChange={this.handleMask}
-              className="form-control"
-              placeholder="Найти"
-            />
-          </form>
-        </div>
+        <Header searching={true} searchingMethod={this.searchingVideo} />
         <div className="container-fluid">
           <div className="row pt-3">
             {this.state.videos.map((item) => {

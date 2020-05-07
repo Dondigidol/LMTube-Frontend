@@ -6,16 +6,18 @@ import AddVideoPage from "./components/Layout/Pages/AddVideoPage";
 import MainPage from "./components/Layout/Pages/MainPage";
 import VideoPage from "./components/Layout/Pages/VideoPage";
 
-function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Route exact path="/" component={MainPage} />
-        <Route exact path="/add-video" component={AddVideoPage} />
-        <Route exact path="/video/:videoId" component={VideoPage} />
-      </Router>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <Router>
+          <Route exact path="/" component={MainPage} />
+          <Route exact path="/add-video" component={AddVideoPage} />
+          <Route exact path="/video/:videoId" component={VideoPage} />
+        </Router>
+      </div>
+    );
+  }
 }
 
 export default App;

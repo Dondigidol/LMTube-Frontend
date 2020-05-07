@@ -77,7 +77,7 @@ class AddVideoPage extends Component {
   render() {
     return (
       <div>
-        <Header searching="false" />
+        <Header searching={false} />
         <div className="container">
           <h4 className="display-4 text-center">Загрузка видео</h4>
           <form

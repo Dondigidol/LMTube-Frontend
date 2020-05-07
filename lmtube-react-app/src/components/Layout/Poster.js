@@ -2,12 +2,9 @@ import React from "react";
 import "../../App.css";
 
 class Poster extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      width: 0,
-    };
-  }
+  state = {
+    width: 0,
+  };
 
   componentDidMount = () => {
     this.setState({
@@ -22,7 +19,7 @@ class Poster extends React.Component {
       <div
         ref={(cont) => (this.posterContainer = cont)}
         style={{
-          height: this.state.width * 0.6,
+          height: this.state.width * 0.8,
         }}
       >
         <img className="poster" src={api_url} alt={this.props.alt} />

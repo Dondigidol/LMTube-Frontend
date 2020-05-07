@@ -1,24 +1,10 @@
 import React, { Component } from "react";
+import SearchForm from "./SearchForm";
 
 const pages = [
   ["Главная", "/"],
   ["Загрузить", "/add-video"],
 ];
-
-function SearchField(props) {
-  if (props.enable === "true") {
-    return (
-      <form className="form-inline my-2 my-lg-0">
-        <input
-          className="form-control mr-sm-2"
-          type="search"
-          placeholder="Поиск"
-          aria-label="Поиск"
-        />
-      </form>
-    );
-  } else return null;
-}
 
 class Header extends Component {
   state = {
@@ -39,20 +25,23 @@ class Header extends Component {
             {pages.map((value) => (
               <li key={value[0]} className="nav-item">
                 {curPath === value[1] ? (
-                  <a className="nav-link menu-selected-item" href={value[1]}>
+                  <a className="nav-link " href={value[1]}>
                     {value[0]}
                   </a>
                 ) : (
-                  <a className="nav-link" href={value[1]}>
+                  <a
+                    className="nav-link text-muted font-weight-lighter"
+                    href={value[1]}
+                  >
                     {value[0]}
                   </a>
                 )}
               </li>
             ))}
           </ul>
-          {
-            //<SearchField enable={this.state.search} />
-          }
+          {this.props.searching && (
+            <SearchForm searchingMethod={this.props.searchingMethod} />
+          )}
         </div>
       </nav>
     );
