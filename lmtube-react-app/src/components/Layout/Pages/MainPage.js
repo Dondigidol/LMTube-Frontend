@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../Header";
-import VideoPreview from "../VideoPreview";
+import Header from "../Elements/Header";
+import VideoPreview from "../Elements/VideoPreview";
 
 class MainPage extends React.Component {
   constructor(props) {

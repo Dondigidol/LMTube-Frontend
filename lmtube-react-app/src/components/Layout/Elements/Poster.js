@@ -1,5 +1,4 @@
 import React from "react";
-import "../../App.css";
 
 class Poster extends React.Component {
   state = {
@@ -19,7 +18,7 @@ class Poster extends React.Component {
       <div
         ref={(cont) => (this.posterContainer = cont)}
         style={{
-          height: this.state.width * 0.8,
+          height: this.state.width * 0.7,
         }}
       >
         <img className="poster" src={api_url} alt={this.props.alt} />

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Header from "../Header";
+import Header from "../Elements/Header";
 
 class AddVideoPage extends Component {
   constructor(props) {

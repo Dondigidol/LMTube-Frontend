@@ -3,7 +3,9 @@ import SearchForm from "./SearchForm";
 
 const pages = [
   ["Главная", "/"],
+  ["Мои видео", "/my-videos"],
   ["Загрузить", "/add-video"],
+  ["Войти", "/login"],
 ];
 
 class Header extends Component {
