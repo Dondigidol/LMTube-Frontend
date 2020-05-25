@@ -2,58 +2,41 @@ import React from "react";
 import Header from "../Elements/Header";
 import VideoPreview from "../Elements/VideoPreview";
 import { connect } from "react-redux";
+import PropTypes from "prop-types"
+import {getVideos} from "../../actions/videoActions"
 
 
 class MainPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      videos: [],
-    };
-  }
-
-  componentDidMount() {
-    this.getVideos("");
-  }
 
   searchingVideo = (e) => {
     e.preventDefault();
     var mask = e.target.elements.mask.value;
-    this.getVideos(mask);
+    this.props.getVideos(mask);
   };
 
-  getVideos = async (mask) => {
-    const api_url = await fetch(
-      `http://localhost:8080/lmtube/api/video/search?title=${mask}`
-    );
-    const data = await api_url.json();
-    this.setState({
-      videos: data,
-    });
-  };
+  componentDidMount(){
+    this.props.getVideos("")
+  }
+
 
   render() {
+    const {videos} = this.props.videos
     return (
       <div>
         <Header searching={true} searchingMethod={this.searchingVideo} />
         <div className="container-fluid">
           <div className="row pt-3">
-            {this.state.videos.map((item) => {
+            {
+              videos.map((video) => {
               return (
-                <div
-                  key={item.id}
-                  className="col-sm-12 col-md-4 col-lg-3 videoPreview"
-                >
+                <div key={video.id} className="col-sm-12 col-md-4 col-lg-3 videoPreview">
                   <VideoPreview
-                    videoId={item.id}
-                    posterId={item.poster.id}
-                    title={item.title}
-                    createdAt={item.createdAt}
-                    views={item.views}
+                    video={video}
                   />
                 </div>
               );
-            })}
+            })
+          }
           </div>
         </div>
       </div>
@@ -61,4 +44,13 @@ class MainPage extends React.Component {
   }
 }
 
-export default connect(null) (MainPage);
+MainPage.propTypes = {
+  getVideos: PropTypes.func.isRequired,
+  videos: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state =>({
+  videos: state.videos
+})
+
+export default connect(mapStateToProps, {getVideos})(MainPage);

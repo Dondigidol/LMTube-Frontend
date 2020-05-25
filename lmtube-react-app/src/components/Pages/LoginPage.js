@@ -3,6 +3,7 @@ import Header from "../Elements/Header";
 import { connect } from "react-redux";
 import PropTypes from "prop-types"
 import {userAuthentication} from "../../actions/userActions"
+import classnames from "classnames"
 
 class LoginPage extends React.Component {
   state = {
@@ -48,24 +49,36 @@ class LoginPage extends React.Component {
                 <div className="form-group">
                   <input
                     type="text"
-                    className="form-control"
+                    className={classnames("form-control", {
+                      "is-invalid": errors.username
+                    })}
                     placeholder="ЛДАП"
                     value={this.state.username}
                     name="username"
                     onChange={this.onChange}
                   />
-                  <p>{errors.username}</p>
+                  {
+                    errors.username && (
+                      <div className="invalid-feedback">{errors.username}</div>
+                    )
+                  }
                 </div>
                 <div className="form-group">
                   <input
                     type="password"
-                    className="form-control"
+                    className={classnames("form-control",{
+                      "is-invalid":errors.password
+                    })}
                     name="password"
                     value={this.state.password}
                     onChange={this.onChange}
                     placeholder="Пароль"
                   />
-                  <p>{errors.password}</p>
+                  {
+                    errors.password && (
+                      <div className="invalid-feedback" >{errors.password}</div>
+                    )
+                  }
                 </div>
                 <div className="form-group text-center">
                   <button

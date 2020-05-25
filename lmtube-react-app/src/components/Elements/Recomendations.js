@@ -24,15 +24,12 @@ class Recomendations extends React.Component {
   render() {
     return (
       <div>
-        {this.state.videos.map((item) => {
+        {this.state.videos.map((video) => {
           return (
-            <div key={item.id} className="videoPreview">
+            <div className="videoPreview">
               <VideoPreview
-                videoId={item.id}
-                posterId={item.poster.id}
-                title={item.title}
-                createdAt={item.createdAt}
-                views={item.views}
+                key={video.id}
+                video ={video}
               />
             </div>
           );

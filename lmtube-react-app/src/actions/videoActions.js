@@ -1,4 +1,4 @@
-import { GET_ERRORS } from "./types";
+import { GET_ERRORS, GET_VIDEOS } from "./types";
 import axios from "axios";
 
 export const uploadVideoDetails = (videoDetails, history) => async dispatch => {
@@ -23,4 +23,12 @@ export const uploadVideoDetails = (videoDetails, history) => async dispatch => {
             payload: err.response.data
         })
     }
+}
+
+export const getVideos = (searchMask) => async dispatch => {
+    const res = await axios.get(`http://localhost:8080/lmtube/api/video/search?title=${searchMask}`)
+    dispatch({
+        type: GET_VIDEOS,
+        payload: res.data
+    })
 }
