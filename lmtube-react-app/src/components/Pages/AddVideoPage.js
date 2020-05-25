@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
 import Header from "../Elements/Header";
+import {uploadVideoDetails} from "../../actions/videoActions"
+import PropTypes from "prop-types"
+import {connect} from "react-redux"
+import classnames from "classnames"
 
 class AddVideoPage extends Component {
   constructor(props) {
@@ -9,72 +12,43 @@ class AddVideoPage extends Component {
     this.state = {
       title: "",
       description: "",
-      videoFile: null,
-      posterFile: null,
+      videoFile: {},
+      posterFile: {},
+      errors: {}
     };
-    this.submitForm = this.submitForm.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onSelectFile = this.onSelectFile.bind(this);
-    this.uploadVideoFile = this.uploadVideoFile.bind(this);
-    this.uploadPosterFile = this.uploadPosterFile.bind(this);
   }
 
-  submitForm(e) {
+  // life cycle hooks
+  componentWillReceiveProps(nextProps){
+    if (nextProps.errors){
+      this.setState({
+        errors: nextProps.errors,
+      })
+    }
+  }
+
+  submitForm = (e)=>{
     e.preventDefault();
     const videoDetails = {
       title: this.state.title,
       description: this.state.description,
-      videos: null,
-      poster: null,
+      videoFile: this.state.videoFile,
+      posterFile: this.state.posterFile,
     };
-
-    this.uploadVideoFile(this.state.videoFile).then((res) => {
-      videoDetails.videos = res.data;
-      this.uploadPosterFile(this.state.posterFile).then((res) => {
-        videoDetails.poster = res.data;
-        console.log(videoDetails);
-        axios
-          .post("http://localhost:8080/lmtube/api/video/upload", videoDetails)
-          .then((res) => {
-            console.log(res);
-          });
-      });
-    });
+    this.props.uploadVideoDetails(videoDetails, this.props.history)
   }
 
-  uploadVideoFile(file) {
-    const url = "http://localhost:8080/lmtube/api/video/upload-video";
-    const formData = new FormData();
-    formData.append("videoFile", file);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    return axios.post(url, formData, config);
-  }
-
-  uploadPosterFile(file) {
-    const url = "http://localhost:8080/lmtube/api/poster/upload-poster";
-    const formData = new FormData();
-    formData.append("posterFile", file);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    return axios.post(url, formData, config);
-  }
-
-  onChange(e) {
+  onChange=(e)=> {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSelectFile(e) {
+  onSelectFile =(e)=>{
     this.setState({ [e.target.name]: e.target.files[0] });
   }
 
   render() {
+    const {errors} = this.state
+
     return (
       <div>
         <Header searching={false} />
@@ -89,11 +63,18 @@ class AddVideoPage extends Component {
               <label htmlFor="title">Заголовок</label>
               <input
                 type="text"
-                className="form-control"
+                className={classnames("form-control", {
+                  "is-invalid": errors.title
+                })}
                 id="title"
                 name="title"
                 onChange={this.onChange}
               />
+              {
+                errors.title && (
+                  <div className="invalid-feedback">{errors.title}</div>
+                )
+              }
               <small className="text-muted">
                 * Заголовок должен быть коротким, но точно отражающим суть видео
               </small>
@@ -101,14 +82,22 @@ class AddVideoPage extends Component {
             <div className="form-group">
               <label htmlFor="description">Описание к видео</label>
               <textarea
-                className="form-control"
+                className={classnames("form-control", {
+                  "is-invalid":errors.description
+                })}
                 name="description"
                 id="description"
                 onChange={this.onChange}
               ></textarea>
+              {
+                errors.description && (
+                  <div className="invalid-feedback">{ errors.description }</div>
+                )
+              }
               <small className="text-muted">
                 * Короткое, но ёмкое по смыслу описание загружаемого видео
               </small>
+              
             </div>
             <div className="form-group">
               <label htmlFor="videoFile">Видеофайл</label>
@@ -119,6 +108,11 @@ class AddVideoPage extends Component {
                 className="form-control-file"
                 onChange={this.onSelectFile}
               />
+              {
+                errors.videoFile && (
+                  <div className="invalid-feedback d-block">{errors.videoFile}</div>
+                )
+              }
             </div>
             <div className="form-group">
               <label htmlFor="posterFile">Постер к видео</label>
@@ -129,6 +123,11 @@ class AddVideoPage extends Component {
                 className="form-control-file"
                 onChange={this.onSelectFile}
               />
+              {
+                errors.posterFile && (
+                  <div className="invalid-feedback d-block">{errors.posterFile}</div>
+                )
+              }
             </div>
             <div className="text-center">
               <button
@@ -145,4 +144,13 @@ class AddVideoPage extends Component {
   }
 }
 
-export default AddVideoPage;
+AddVideoPage.propTypes = {
+  uploadVideoDetails: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state =>({
+  errors: state.errors
+})
+
+export default connect(mapStateToProps, {uploadVideoDetails})(AddVideoPage);

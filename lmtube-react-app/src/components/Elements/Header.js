@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import SearchForm from "./SearchForm";
 
 const pages = [
@@ -8,7 +8,7 @@ const pages = [
   ["Войти", "/login"],
 ];
 
-class Header extends Component {
+class Header extends React.Component {
   state = {
     search: this.props.searching,
     highlight: this.props.highlight,

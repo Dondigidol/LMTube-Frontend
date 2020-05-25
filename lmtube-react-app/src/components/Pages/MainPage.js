@@ -1,11 +1,12 @@
 import React from "react";
 import Header from "../Elements/Header";
 import VideoPreview from "../Elements/VideoPreview";
+import { connect } from "react-redux";
+
 
 class MainPage extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       videos: [],
     };
@@ -60,4 +61,4 @@ class MainPage extends React.Component {
   }
 }
 
-export default MainPage;
+export default connect(null) (MainPage);

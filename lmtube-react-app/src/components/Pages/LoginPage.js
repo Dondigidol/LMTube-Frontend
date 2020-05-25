@@ -1,12 +1,23 @@
 import React from "react";
-import Header from "../Layout/Elements/Header";
-import { login } from "../API/Login";
+import Header from "../Elements/Header";
+import { connect } from "react-redux";
+import PropTypes from "prop-types"
+import {userAuthentication} from "../../actions/userActions"
 
 class LoginPage extends React.Component {
   state = {
     username: "",
     password: "",
+    errors: {},
   };
+
+  componentWillReceiveProps(nextProps){
+    if (nextProps.errors){
+      this.setState({
+        errors: nextProps.errors
+      })
+    }
+  }
 
   onChange = (e) => {
     this.setState({
@@ -15,10 +26,18 @@ class LoginPage extends React.Component {
   };
 
   onLogin = (e) => {
-    login(e, this.state.username, this.state.password);
+    e.preventDefault();
+    console.log(this.state.username);
+    
+    const creditials ={
+      username: this.state.username,
+      password: this.state.password
+    }
+    this.props.userAuthentication(creditials, this.props.history)
   };
 
   render() {
+    const errors = this.state.errors
     return (
       <div>
         <Header />
@@ -35,6 +54,7 @@ class LoginPage extends React.Component {
                     name="username"
                     onChange={this.onChange}
                   />
+                  <p>{errors.username}</p>
                 </div>
                 <div className="form-group">
                   <input
@@ -45,6 +65,7 @@ class LoginPage extends React.Component {
                     onChange={this.onChange}
                     placeholder="Пароль"
                   />
+                  <p>{errors.password}</p>
                 </div>
                 <div className="form-group text-center">
                   <button
@@ -54,6 +75,7 @@ class LoginPage extends React.Component {
                     Войти
                   </button>
                 </div>
+                
               </form>
             </div>
           </div>
@@ -63,4 +85,14 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+
+LoginPage.propTypes = {
+  userAuthentication: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps =state =>({
+  errors: state.errors
+})
+
+export default connect(mapStateToProps, {userAuthentication}) (LoginPage);
