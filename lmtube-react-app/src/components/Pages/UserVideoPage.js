@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../Elements/Header";
 import VideoPreview from "../Elements/VideoPreview";
 
-class MyPage extends React.Component {
+class UserVideoPage extends React.Component {
   state = {
     videos: [],
   };
@@ -24,27 +24,16 @@ class MyPage extends React.Component {
   };
 
   render() {
+    const {videos} = this.state.videos
     return (
       <div>
         <Header />
         <div className="container">
-          {this.state.videos.map((item) => {
-            return (
-              <div>
-                <VideoPreview
-                  videoId={item.videoId}
-                  posterId={item.posterId}
-                  title={item.title}
-                  createdAt={item.createdAt}
-                  views={item.views}
-                />
-              </div>
-            );
-          })}
+         
         </div>
       </div>
     );
   }
 }
 
-export default MyPage;
+export default UserVideoPage;

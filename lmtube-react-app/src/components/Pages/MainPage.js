@@ -23,7 +23,7 @@ class MainPage extends React.Component {
     const {videos} = this.props.videos
     return (
       <div>
-        <Header searching={true} searchingMethod={this.searchingVideo} />
+        <Header searchingMethod={this.searchingVideo} />
         <div className="container-fluid">
           <div className="row pt-3">
             {

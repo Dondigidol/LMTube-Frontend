@@ -13,6 +13,9 @@ class LoginPage extends React.Component {
   };
 
   componentWillReceiveProps(nextProps){
+    if (nextProps.security.validToken){
+      this.props.history.push("/");
+    }
     if (nextProps.errors){
       this.setState({
         errors: nextProps.errors
@@ -28,16 +31,14 @@ class LoginPage extends React.Component {
 
   onLogin = (e) => {
     e.preventDefault();
-    console.log(this.state.username);
-    
     const creditials ={
       username: this.state.username,
       password: this.state.password
     }
-    this.props.userAuthentication(creditials, this.props.history)
+    this.props.userAuthentication(creditials)
   };
 
-  render() {
+  render() { 
     const errors = this.state.errors
     return (
       <div>
@@ -101,10 +102,12 @@ class LoginPage extends React.Component {
 
 LoginPage.propTypes = {
   userAuthentication: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired
 }
 
 const mapStateToProps =state =>({
+  security: state.security,
   errors: state.errors
 })
 

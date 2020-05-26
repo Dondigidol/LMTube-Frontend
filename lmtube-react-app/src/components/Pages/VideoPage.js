@@ -96,7 +96,7 @@ class VideoPage extends React.Component {
                 <h4>{this.state.title}</h4>
               </div>
               <small className="text-muted">
-                <div className="d-inline">Автор:</div>
+                <div className="d-inline">Автор: </div>
                 <div className="d-inline float-right">
                   Загружено: {this.state.createdAt}
                 </div>

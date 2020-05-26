@@ -13,7 +13,7 @@ const VideoPreview = (props) => {
         </div>
         <p className="text-center font-weight-bold">{props.video.title}</p>
         <small className="muted">
-          <div>Автор:</div>
+          <div>Автор: {props.video.author.fullName}</div>
           <div>Загружен: {props.video.createdAt}</div>
           <div>Просмотров: {props.video.views}</div>
         </small>

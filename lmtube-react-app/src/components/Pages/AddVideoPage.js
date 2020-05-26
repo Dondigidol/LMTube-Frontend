@@ -47,6 +47,11 @@ class AddVideoPage extends Component {
   }
 
   render() {
+    const token = localStorage.getItem("jwtToken")    
+    if (!token){
+      window.location.href = "/login"
+    } 
+    
     const {errors} = this.state
 
     return (
@@ -146,11 +151,13 @@ class AddVideoPage extends Component {
 
 AddVideoPage.propTypes = {
   uploadVideoDetails: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  errors: PropTypes.object.isRequired,
+  security: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state =>({
-  errors: state.errors
+  errors: state.errors,
+  security: state.security
 })
 
 export default connect(mapStateToProps, {uploadVideoDetails})(AddVideoPage);

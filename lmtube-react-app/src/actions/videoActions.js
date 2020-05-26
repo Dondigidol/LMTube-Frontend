@@ -11,7 +11,6 @@ export const uploadVideoDetails = (videoDetails, history) => async dispatch => {
         const params = {
             headers :{
                 "Content-Type": "multipart/form-data",
-                "Authorization": "Lmplay eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiYWRtaW5pc3RyYXRvciIsImZ1bGxOYW1lIjoi0K3QvNC40LvRjCDQotGD0LvQsdCw0LXQsiIsInBvc2l0aW9uIjoi0YHQv9C10YbQuNCw0LvQuNGB0YIg0YLQtdGF0L3QuNGH0LXRgdC60L7QuSDQv9C-0LTQtNC10YDQttC60LgiLCJleHAiOjE1OTA0MjgxMTUsImlhdCI6MTU5MDQyODA4NSwidXNlcm5hbWUiOiI2MDAzMTgwOSJ9.UmFYe_7tjWFR8Lt_AYQ801K-9bOMbGay7jMztT3ZXPgg1-i9ktTn0g_YzKRvPvBHky9vKgNdaOqh3-MlBNNERw"
             }
         }
         await axios.post("http://localhost:8080/lmtube/api/video/upload", formData, params)
