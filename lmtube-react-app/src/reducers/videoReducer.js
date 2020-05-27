@@ -1,4 +1,4 @@
-import {GET_VIDEOS} from "../actions/types"
+import {GET_VIDEOS, GET_SELECTED_VIDEO} from "../actions/types"
 
 const initialState = {
     videos: [],
@@ -11,6 +11,11 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 videos: action.payload
+            }
+        case GET_SELECTED_VIDEO:
+            return {
+                ...state,
+                video: action.payload
             }
         default:
             return state

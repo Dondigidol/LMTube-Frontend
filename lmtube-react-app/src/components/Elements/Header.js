@@ -22,7 +22,7 @@ class Header extends React.Component {
 
   componentDidMount=()=>{    
     const path = window.location.pathname
-    pages.map(page => {      
+    pages.forEach(page => {      
       if (page[1] === path && page[3])
         this.setState({
           searchEnabled: true
@@ -55,6 +55,10 @@ class Header extends React.Component {
             <SearchForm searchingMethod={this.props.searchingMethod} />
           )
         }
+
+        <div className="navbar-nav">
+          <a className="nav-link text-muted font-weight-lighter" href="/" onClick={()=>this.props.userLogout()}>Выйти</a>
+        </div>
       </div>
       )
 
@@ -99,7 +103,7 @@ class Header extends React.Component {
     return (
       <nav className="navbar navbar-expand navbar-light header-bg-color">
         <a className="navbar-brand" href="/">
-          LMTube
+          LMPlay
         </a>
           {headerLinks}
       </nav>

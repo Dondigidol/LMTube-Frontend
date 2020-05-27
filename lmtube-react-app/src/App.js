@@ -19,6 +19,8 @@ const jwtToken = localStorage.jwtToken
 if (jwtToken){
   setJWTToken(jwtToken)
   const decoded = jwt_decode(jwtToken)
+  console.log(decoded);
+  
   store.dispatch({
     type: SET_CURRENT_USER,
     payload: decoded

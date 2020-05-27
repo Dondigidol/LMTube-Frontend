@@ -1,4 +1,4 @@
-import { GET_ERRORS, GET_VIDEOS } from "./types";
+import { GET_ERRORS, GET_VIDEOS, GET_SELECTED_VIDEO } from "./types";
 import axios from "axios";
 
 export const uploadVideoDetails = (videoDetails, history) => async dispatch => {
@@ -29,5 +29,23 @@ export const getVideos = (searchMask) => async dispatch => {
     dispatch({
         type: GET_VIDEOS,
         payload: res.data
+    })
+}
+
+export const getSelectedVideo = (videoId) => async dispatch => {
+    const res = await axios.get(`http://localhost:8080/lmtube/api/video/${videoId}`);
+    dispatch({
+        type: GET_SELECTED_VIDEO,
+        payload: res.data
+    })
+}
+
+export const getUserVideos = () => async dispatch => {
+    const res = await axios.get("http://localhost:8080/lmtube/api/user/videos")
+    console.log(res.data);
+    
+    dispatch({
+        type: GET_VIDEOS,
+        payload: res.data,
     })
 }

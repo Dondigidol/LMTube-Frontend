@@ -1,12 +1,11 @@
 import React from "react";
 import Poster from "./Poster";
-import { Link } from "react-router-dom";
 
 const VideoPreview = (props) => {
   const videoUri = "/video/" + props.video.id;
 
   return (
-    <Link className="nav-link text-muted" to={videoUri} poster={props.video.poster.id}>
+    <a className="nav-link text-muted" href={videoUri} poster={props.video.poster.id}>
       <div className="videoPreview card-body">
         <div>
           <Poster posterId={props.video.poster.id} alt={props.video.title} />
@@ -18,7 +17,7 @@ const VideoPreview = (props) => {
           <div>Просмотров: {props.video.views}</div>
         </small>
       </div>
-    </Link>
+    </a>
   );
 };
 

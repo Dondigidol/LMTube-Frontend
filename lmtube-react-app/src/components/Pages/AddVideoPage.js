@@ -27,7 +27,7 @@ class AddVideoPage extends Component {
     }
   }
 
-  submitForm = (e)=>{
+  submitForm=(e)=>{
     e.preventDefault();
     const videoDetails = {
       title: this.state.title,

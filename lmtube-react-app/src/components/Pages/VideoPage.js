@@ -1,69 +1,62 @@
 import React from "react";
 import Header from "../Elements/Header";
 import Recomendations from "../Elements/Recomendations";
+import { connect } from "react-redux";
+import PropTypes from "prop-types"
+import { getSelectedVideo } from "../../actions/videoActions";
 
 class VideoPage extends React.Component {
   state = {
-    videoId: this.props.match.params.videoId,
-    posterSrc: null,
-    streams: [],
     title: null,
     description: null,
     views: null,
+    author: null,
+    createdAt: null,
+    posterSrc: null,
+    videoStreams: [],
     videoContainerWidth: 0,
   };
 
-  // получение информации о видео по ид страницы
-  getVideoDetais = async (videoId) => {
-    this.setState({
-      streams: [],
-      posterSrc: null,
-    });
-
-    const video_uri = await fetch(
-      `http://localhost:8080/lmtube/api/video/${videoId}`
-    );
-    const data = await video_uri.json();
-    const posterSrc = `http://localhost:8080/lmtube/api/poster/${data.poster.id}`;
-    const videos = data.videos;
-    const streams = [];
-    await videos.map((video) => {
-      const streamSrc = `http://localhost:8080/lmtube/api/video/stream/${video.name}?res=${video.resolution}`;
-      const stream = {
-        id: video.id,
-        src: streamSrc,
-        mimeType: video.mimeType,
-        length: video.contentLength,
-      };
-      streams.push(stream);
-      return null;
-    });
-
-    this.setState({
-      videoId: videoId,
-      posterSrc: posterSrc,
-      title: data.title,
-      description: data.description,
-      createdAt: data.createdAt,
-      views: data.views,
-      streams: streams,
-    });
-  };
-
   componentDidMount() {
-    this.getVideoDetais(this.props.match.params.videoId);
+    this.props.getSelectedVideo(this.props.match.params.videoId)
     this.setState({
       videoContainerWidth: this.videoContainer.clientWidth,
     });
   }
 
   componentWillReceiveProps(newProps) {
-    this.getVideoDetais(newProps.match.params.videoId);
+    if (newProps.video){
+      const posterSrc = `http://localhost:8080/lmtube/api/poster/${newProps.video.poster.id}`
+
+      let streams = [];
+      newProps.video.videos.forEach((video) => {
+        const src = `http://localhost:8080/lmtube/api/video/stream/${video.name}?res=${video.resolution}`;
+        const stream = {
+          id: video.id,
+          src: src,
+          mimeType: video.mimeType,
+          length: video.contentLength,
+        }
+        streams.push(stream);
+      })
+
+
+      this.setState({
+        title: newProps.video.title ,
+        description: newProps.video.description,
+        views: newProps.video.views,
+        author: newProps.video.author.fullName,
+        createdAt: newProps.video.createdAt,
+        posterSrc: posterSrc,
+        videoStreams: streams,
+      })
+    }
+
   }
 
   render() {
     return (
-      <div key={this.props.match.params.videoId}>
+      <div key={1}>
         <Header />
         <div className="container">
           <div className="row">
@@ -81,22 +74,17 @@ class VideoPage extends React.Component {
                 }}
                 className="video"
               >
-                {this.state.streams.map((stream) => {
-                  return (
-                    <source
-                      key={stream.id}
-                      src={stream.src}
-                      type={stream.mimeType}
-                      length={stream.length}
-                    />
-                  );
-                })}
+                {
+                  this.state.videoStreams.map(stream => (
+                    <source key={stream.id} src={stream.src} type={stream.mimeType} length={stream.length} /> 
+                  ))
+                }
               </video>
               <div>
                 <h4>{this.state.title}</h4>
               </div>
               <small className="text-muted">
-                <div className="d-inline">Автор: </div>
+                <div className="d-inline">Автор: {this.state.author}</div>
                 <div className="d-inline float-right">
                   Загружено: {this.state.createdAt}
                 </div>
@@ -119,4 +107,15 @@ class VideoPage extends React.Component {
   }
 }
 
-export default VideoPage;
+VideoPage.propTypes = {
+  video: PropTypes.object.isRequired,
+  getSelectedVideo: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state =>{
+  return {
+    video: state.videos.video
+  }
+}
+
+export default connect(mapStateToProps, {getSelectedVideo}) (VideoPage);

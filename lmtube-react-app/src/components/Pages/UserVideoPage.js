@@ -1,6 +1,10 @@
 import React from "react";
 import Header from "../Elements/Header";
-import VideoPreview from "../Elements/VideoPreview";
+import { connect } from "react-redux";
+import {getUserVideos} from "../../actions/videoActions"
+import PropTypes from "prop-types"
+import VideoPreview from "../Elements/VideoPreview"
+
 
 class UserVideoPage extends React.Component {
   state = {
@@ -8,32 +12,54 @@ class UserVideoPage extends React.Component {
   };
 
   componentDidMount() {
-    this.getVideos();
+    this.props.getUserVideos();
   }
 
-  getVideos = async () => {
-    const targetUri = await fetch(
-      "http://localhost:8080/lmtube/api/user/videos"
-    );
-    const data = await targetUri.json();
-    if (data) {
+  componentWillReceiveProps(newProps){
+    if (newProps.videos){
+      console.log(newProps.videos);
+      
       this.setState({
-        videos: data,
-      });
+        videos: newProps.videos
+      })
     }
-  };
+  }
 
   render() {
-    const {videos} = this.state.videos
     return (
       <div>
-        <Header />
-        <div className="container">
-         
+        <Header searchingMethod={this.searchingVideo} />
+        <div className="container-fluid">
+          <div className="row pt-3">
+            {
+              this.state.videos ? 
+                this.state.videos.map(video => {
+                return (
+                  <div key={video.id} className="col-sm-12 col-md-4 col-lg-3 videoPreview">
+                    <VideoPreview
+                      video={video}
+                    />
+                  </div>
+                );
+              }) : ({})
+            }
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default UserVideoPage;
+UserVideoPage.propTypes = {
+  videos: PropTypes.array.isRequired,
+  getUserVideos: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state =>{
+  return {
+    videos: state.videos.videos
+  }
+}
+
+
+export default connect(mapStateToProps, { getUserVideos })(UserVideoPage);
