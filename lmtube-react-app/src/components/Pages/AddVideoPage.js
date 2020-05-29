@@ -112,6 +112,7 @@ class AddVideoPage extends Component {
                 id="videoFile"
                 className="form-control-file"
                 onChange={this.onSelectFile}
+                accept="video/*"
               />
               {
                 errors.videoFile && (
@@ -127,6 +128,7 @@ class AddVideoPage extends Component {
                 id="posterFile"
                 className="form-control-file"
                 onChange={this.onSelectFile}
+                accept="image/*"
               />
               {
                 errors.posterFile && (

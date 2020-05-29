@@ -13,14 +13,14 @@ import jwt_decode from "jwt-decode"
 import setJWTToken from "./securityUtils/setJWTToken" 
 import { SET_CURRENT_USER } from "./actions/types";
 import {userLogout} from "./actions/userActions"
+import EmbedVideo from "./components/Elements/EmbedVideo";
+import TestPage from "./components/Pages/TestPage";
 
 const jwtToken = localStorage.jwtToken
 
 if (jwtToken){
   setJWTToken(jwtToken)
   const decoded = jwt_decode(jwtToken)
-  console.log(decoded);
-  
   store.dispatch({
     type: SET_CURRENT_USER,
     payload: decoded
@@ -49,6 +49,8 @@ class App extends React.Component {
             <Route exact path="/" component={MainPage} />
             <Route exact path="/login" component={LoginPage} />
             <Route exact path="/video/:videoId" component={VideoPage} />
+            <Route exact path="/embed/:videoId" component={EmbedVideo} />
+            <Route exact path="/test" component={TestPage} />
           </Router>
 
           {

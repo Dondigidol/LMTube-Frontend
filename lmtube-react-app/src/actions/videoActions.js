@@ -14,7 +14,7 @@ export const uploadVideoDetails = (videoDetails, history) => async dispatch => {
             }
         }
         await axios.post("http://localhost:8080/lmtube/api/video/upload", formData, params)
-        history.push("/")
+        window.location.href="/user-videos"
         
     }catch(err){
         dispatch ({
