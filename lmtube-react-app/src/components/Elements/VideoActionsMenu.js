@@ -36,7 +36,7 @@ class VideoActionsMenu extends React.Component {
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ fontSize: "0.8em" }}>
             <Dropdown.Item onClick={this.showIframePopup}>
-              поделиться
+              встроить видео
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
