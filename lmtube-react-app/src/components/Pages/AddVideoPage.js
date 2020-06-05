@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Header from "../Elements/Header";
-import {uploadVideoDetails} from "../../actions/videoActions"
-import PropTypes from "prop-types"
-import {connect} from "react-redux"
-import classnames from "classnames"
+import { uploadVideoDetails } from "../../actions/videoActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import classnames from "classnames";
 
 class AddVideoPage extends Component {
   constructor(props) {
@@ -14,20 +14,20 @@ class AddVideoPage extends Component {
       description: "",
       videoFile: {},
       posterFile: {},
-      errors: {}
+      errors: {},
     };
   }
 
   // life cycle hooks
-  componentWillReceiveProps(nextProps){
-    if (nextProps.errors){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors,
-      })
+      });
     }
   }
 
-  submitForm=(e)=>{
+  submitForm = (e) => {
     e.preventDefault();
     const videoDetails = {
       title: this.state.title,
@@ -35,24 +35,24 @@ class AddVideoPage extends Component {
       videoFile: this.state.videoFile,
       posterFile: this.state.posterFile,
     };
-    this.props.uploadVideoDetails(videoDetails, this.props.history)
-  }
+    this.props.uploadVideoDetails(videoDetails, this.props.history);
+  };
 
-  onChange=(e)=> {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
-  }
+  };
 
-  onSelectFile =(e)=>{
+  onSelectFile = (e) => {
     this.setState({ [e.target.name]: e.target.files[0] });
-  }
+  };
 
   render() {
-    const token = localStorage.getItem("jwtToken")    
-    if (!token){
-      window.location.href = "/login"
-    } 
-    
-    const {errors} = this.state
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
+      window.location.href = "/login";
+    }
+
+    const { errors } = this.state;
 
     return (
       <div>
@@ -69,17 +69,15 @@ class AddVideoPage extends Component {
               <input
                 type="text"
                 className={classnames("form-control", {
-                  "is-invalid": errors.title
+                  "is-invalid": errors.title,
                 })}
                 id="title"
                 name="title"
                 onChange={this.onChange}
               />
-              {
-                errors.title && (
-                  <div className="invalid-feedback">{errors.title}</div>
-                )
-              }
+              {errors.title && (
+                <div className="invalid-feedback">{errors.title}</div>
+              )}
               <small className="text-muted">
                 * Заголовок должен быть коротким, но точно отражающим суть видео
               </small>
@@ -88,21 +86,18 @@ class AddVideoPage extends Component {
               <label htmlFor="description">Описание к видео</label>
               <textarea
                 className={classnames("form-control", {
-                  "is-invalid":errors.description
+                  "is-invalid": errors.description,
                 })}
                 name="description"
                 id="description"
                 onChange={this.onChange}
               ></textarea>
-              {
-                errors.description && (
-                  <div className="invalid-feedback">{ errors.description }</div>
-                )
-              }
+              {errors.description && (
+                <div className="invalid-feedback">{errors.description}</div>
+              )}
               <small className="text-muted">
                 * Короткое, но ёмкое по смыслу описание загружаемого видео
               </small>
-              
             </div>
             <div className="form-group">
               <label htmlFor="videoFile">Видеофайл</label>
@@ -114,11 +109,11 @@ class AddVideoPage extends Component {
                 onChange={this.onSelectFile}
                 accept="video/*"
               />
-              {
-                errors.videoFile && (
-                  <div className="invalid-feedback d-block">{errors.videoFile}</div>
-                )
-              }
+              {errors.videoFile && (
+                <div className="invalid-feedback d-block">
+                  {errors.videoFile}
+                </div>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="posterFile">Постер к видео</label>
@@ -130,11 +125,11 @@ class AddVideoPage extends Component {
                 onChange={this.onSelectFile}
                 accept="image/*"
               />
-              {
-                errors.posterFile && (
-                  <div className="invalid-feedback d-block">{errors.posterFile}</div>
-                )
-              }
+              {errors.posterFile && (
+                <div className="invalid-feedback d-block">
+                  {errors.posterFile}
+                </div>
+              )}
             </div>
             <div className="text-center">
               <button
@@ -154,12 +149,12 @@ class AddVideoPage extends Component {
 AddVideoPage.propTypes = {
   uploadVideoDetails: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  security: PropTypes.object.isRequired
-}
+  security: PropTypes.object.isRequired,
+};
 
-const mapStateToProps = state =>({
+const mapStateToProps = (state) => ({
   errors: state.errors,
-  security: state.security
-})
+  security: state.security,
+});
 
-export default connect(mapStateToProps, {uploadVideoDetails})(AddVideoPage);
+export default connect(mapStateToProps, { uploadVideoDetails })(AddVideoPage);

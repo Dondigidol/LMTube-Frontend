@@ -1,6 +1,8 @@
 import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import IframePopup from "./VideoMenu/IframePopup";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class VideoActionsMenu extends React.Component {
   state = {
@@ -38,6 +40,9 @@ class VideoActionsMenu extends React.Component {
             <Dropdown.Item onClick={this.showIframePopup}>
               встроить видео
             </Dropdown.Item>
+            <Dropdown.Item>
+              {!this.props.video.available && <p>снять с публикации</p>}
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
@@ -45,4 +50,16 @@ class VideoActionsMenu extends React.Component {
   }
 }
 
-export default VideoActionsMenu;
+VideoActionsMenu.propTypes = {
+  user: PropTypes.object.isRequired,
+  video: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.security.user,
+    video: state.videos.video,
+  };
+};
+
+export default connect(mapStateToProps)(VideoActionsMenu);

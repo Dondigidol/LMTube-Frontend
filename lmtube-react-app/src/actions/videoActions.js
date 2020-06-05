@@ -29,9 +29,9 @@ export const uploadVideoDetails = (videoDetails, history) => async (
   }
 };
 
-export const getVideos = (searchMask) => async (dispatch) => {
+export const getVideos = (searchMask, availability) => async (dispatch) => {
   const res = await axios.get(
-    `http://localhost:8080/lmtube/api/video/search?title=${searchMask}`
+    `http://localhost:8080/lmtube/api/video/videos?title=${searchMask}&available=${availability}`
   );
   dispatch({
     type: GET_VIDEOS,
@@ -57,3 +57,5 @@ export const getUserVideos = () => async (dispatch) => {
     payload: res.data,
   });
 };
+
+export const getNonPublishedVideos = () => async (dispatch) => {};
