@@ -6,6 +6,20 @@ import PropTypes from "prop-types";
 import VideoPreview from "../Elements/VideoPreview";
 
 class Moderation extends React.Component {
+  constructor(props) {
+    super(props);
+    if (!props.validToken) {
+      window.location.href = "/login";
+    }
+    switch (props.user.role) {
+      case "ADMINISTRATOR":
+      case "MODERATOR":
+        break;
+      default:
+        window.location.href = "/";
+    }
+  }
+
   searchingVideo = (e) => {
     e.preventDefault();
     var mask = e.target.elements.mask.value;
@@ -17,15 +31,11 @@ class Moderation extends React.Component {
   };
 
   render() {
-    if (!this.props.validToken) {
-      window.location.href = "/login";
-    }
     const { videos } = this.props.videos;
     return (
       <div>
         <Header searchingMethod={this.searchingVideo} />
         <div className="container-fluid">
-          <div className="lead text-center">Нуждаются в модерации.</div>
           <div className="row pt-3">
             {videos.map((video) => {
               return (

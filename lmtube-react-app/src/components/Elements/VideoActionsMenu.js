@@ -3,6 +3,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import IframePopup from "./VideoMenu/IframePopup";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Availability from "../Elements/VideoMenu/Availability";
 
 class VideoActionsMenu extends React.Component {
   state = {
@@ -41,7 +42,7 @@ class VideoActionsMenu extends React.Component {
               встроить видео
             </Dropdown.Item>
             <Dropdown.Item>
-              {!this.props.video.available && <p>снять с публикации</p>}
+              <Availability />
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

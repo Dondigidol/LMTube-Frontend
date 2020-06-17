@@ -1,76 +1,38 @@
 import React from "react";
+import VideoContainer from "../containers/VideoContainer";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getVideo } from "../../actions/videoActions";
 import Header from "../Elements/Header";
 import Recomendations from "../Elements/Recomendations";
-import { connect } from "react-redux";
-import PropTypes from "prop-types"
-import { getSelectedVideo } from "../../actions/videoActions";
-import Video from "../Elements/Video";
-import VideoActionsMenu from "../Elements/VideoActionsMenu";
 
-class VideoPage extends React.Component {
-  state = {
-    videoId: 0,
-    videoContainerWidth: 0,
-    video: {},
-    author: undefined,
-  };
+class TestPage extends React.Component {
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
-    const videoId = this.props.match.params.videoId;    
-    this.props.getSelectedVideo(videoId)
-    this.setState({
-      videoContainerWidth: this.videoContainer.clientWidth,
+    const videoId = this.props.match.params.videoId;
+
+    this.state = {
       videoId: videoId,
-      video: this.props.video
-    });
-  }
+      video: {},
+    };
 
-  componentWillReceiveProps = (newProps) =>{
-    if (newProps){
-      this.setState({
-        video: newProps.video,
-        author: newProps.video.author.fullName,
-      })
+    if (videoId !== undefined) {
+      this.props.getVideo(videoId);
     }
   }
 
   render() {
     return (
-      <div key={1}>
+      <div>
         <Header />
         <div className="container">
           <div className="row">
-            <div
-              className="col-sm-12 col-lg-8 pt-3"
-              ref={(cont) => (this.videoContainer = cont)}
-            >      
-            <div style={{
-              height: this.state.videoContainerWidth * 0.54,
-            }}>
-              <Video videoId = {this.props.match.params.videoId} />            
+            <div className="col-12 col-lg-8">
+              <VideoContainer />
             </div>
-              
-              <VideoActionsMenu />
-              
-              <div>
-                <h4>{this.state.video.title}</h4>
-              </div>
-              <small className="text-muted">
-                <div className="d-inline">Автор: {this.state.author}</div>
-                <div className="d-inline float-right">
-                  Загружено: {this.state.video.createdAt}
-                </div>
-
-                <div>Просмотров: {this.state.video.views}</div>
-              </small>
-              <hr />
-              <div className="">{this.state.video.description}</div>
-            </div>
-            <div className="col-sm-12 col-lg-4">
-              <p className="breadcrumb breadcrumb-item active mt-3">
-                Рекомендации
-              </p>
-              <Recomendations videoId={this.props.match.params.videoId} />
+            <div className="col-12 col-lg-4">
+              <Recomendations />
             </div>
           </div>
         </div>
@@ -79,17 +41,15 @@ class VideoPage extends React.Component {
   }
 }
 
-VideoPage.propTypes = {
+TestPage.propTypes = {
   video: PropTypes.object.isRequired,
-  getSelectedVideo: PropTypes.func.isRequired,
-  videos: PropTypes.object.isRequired
-}
+  getVideo: PropTypes.func.isRequired,
+};
 
-const mapStateToProps = state =>{
+const mapStateToProps = (state) => {
   return {
     video: state.videos.video,
-    videos: state.videos
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, {getSelectedVideo}) (VideoPage);
+export default connect(mapStateToProps, { getVideo })(TestPage);

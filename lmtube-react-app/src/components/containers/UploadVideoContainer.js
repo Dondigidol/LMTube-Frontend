@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
 
-class AddVideoPage extends Component {
+class UploadVideoContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +18,6 @@ class AddVideoPage extends Component {
     };
   }
 
-  // life cycle hooks
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
@@ -47,16 +46,10 @@ class AddVideoPage extends Component {
   };
 
   render() {
-    const token = localStorage.getItem("jwtToken");
-    if (!token) {
-      window.location.href = "/login";
-    }
-
     const { errors } = this.state;
 
     return (
       <div>
-        <Header searching={false} />
         <div className="container">
           <h4 className="display-4 text-center">Загрузка видео</h4>
           <form
@@ -146,15 +139,19 @@ class AddVideoPage extends Component {
   }
 }
 
-AddVideoPage.propTypes = {
+UploadVideoContainer.propTypes = {
   uploadVideoDetails: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  security: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  validToken: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   errors: state.errors,
-  security: state.security,
+  user: state.security.user,
+  validToken: state.security.validToken,
 });
 
-export default connect(mapStateToProps, { uploadVideoDetails })(AddVideoPage);
+export default connect(mapStateToProps, { uploadVideoDetails })(
+  UploadVideoContainer
+);

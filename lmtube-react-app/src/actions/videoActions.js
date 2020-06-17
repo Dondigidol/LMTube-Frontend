@@ -39,14 +39,18 @@ export const getVideos = (searchMask, availability) => async (dispatch) => {
   });
 };
 
-export const getSelectedVideo = (videoId) => async (dispatch) => {
-  const res = await axios.get(
-    `http://localhost:8080/lmtube/api/video/${videoId}`
-  );
-  dispatch({
-    type: GET_SELECTED_VIDEO,
-    payload: res.data,
-  });
+export const getVideo = (videoId) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `http://localhost:8080/lmtube/api/video/${videoId}`
+    );
+    await dispatch({
+      type: GET_SELECTED_VIDEO,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const getUserVideos = () => async (dispatch) => {
@@ -58,4 +62,26 @@ export const getUserVideos = () => async (dispatch) => {
   });
 };
 
-export const getNonPublishedVideos = () => async (dispatch) => {};
+export const setAvailability = (videoId, availability) => async (dispatch) => {
+  const res = await axios.post(
+    `http://localhost:8080/lmtube/api/video/availability?id=${videoId}&available=${availability}`
+  );
+  dispatch({
+    type: GET_SELECTED_VIDEO,
+    payload: res.data,
+  });
+};
+
+export const getPosterSrc = (posterId) => {
+  if (posterId) {
+    return `http://localhost:8080/lmtube/api/poster/${posterId}`;
+  }
+  return null;
+};
+
+export const getVideoSrc = (resolution, name) => {
+  if (resolution && name) {
+    return `http://localhost:8080/lmtube/api/video/stream/${resolution}/${name}`;
+  }
+  return null;
+};

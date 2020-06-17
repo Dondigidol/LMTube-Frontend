@@ -1,13 +1,25 @@
 import React from "react";
 import VideoPreview from "../Elements/VideoPreview";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class Recomendations extends React.Component {
   state = {
+    videoId: undefined,
     videos: [],
   };
 
-  componentDidMount() {
-    this.getRecommendations();
+  componentDidUpdate() {
+    let videoId = this.props.videoId;
+
+    if (videoId !== this.state.videoId) {
+      console.log(videoId);
+      this.setState({
+        videoId: videoId,
+      });
+
+      this.getRecommendations();
+    }
   }
 
   getRecommendations = async () => {
@@ -24,17 +36,21 @@ class Recomendations extends React.Component {
   render() {
     return (
       <div>
+        <p className="breadcrumb breadcrumb-item active mt-3">Рекомендации</p>
         {this.state.videos.map((video) => (
-            <div key={video.id} className="videoPreview">
-              <VideoPreview
-                video ={video}
-              />
-            </div>
-          )
-        )}
+          <div key={video.id} className="videoPreview">
+            <VideoPreview video={video} />
+          </div>
+        ))}
       </div>
     );
   }
 }
 
-export default Recomendations;
+const mapStateToProps = (state) => {
+  return {
+    videoId: state.videos.video.id,
+  };
+};
+
+export default connect(mapStateToProps)(Recomendations);
