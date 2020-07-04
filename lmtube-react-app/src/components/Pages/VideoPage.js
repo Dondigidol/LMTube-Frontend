@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { getVideo } from "../../actions/videoActions";
 import Header from "../Elements/Header";
 import Recomendations from "../Elements/Recomendations";
+import NoVideoContainer from "../containers/NoVideoContainer";
 
 class TestPage extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class TestPage extends React.Component {
     this.state = {
       videoId: videoId,
       video: {},
+      error: {},
     };
 
     if (videoId !== undefined) {
@@ -22,14 +24,28 @@ class TestPage extends React.Component {
     }
   }
 
+  componentDidUpdate = (newProps, oldProps) => {
+    if (newProps.error.message !== oldProps.error.message) {
+      this.setState({
+        error: newProps.error,
+      });
+    }
+    if (newProps.video.id !== oldProps.video.id) {
+      this.setState({
+        video: newProps.video,
+      });
+    }
+  };
+
   render() {
+    const errorMessage = this.state.error.message;
     return (
       <div>
         <Header />
         <div className="container">
           <div className="row">
             <div className="col-12 col-lg-8">
-              <VideoContainer />
+              {errorMessage ? <NoVideoContainer /> : <VideoContainer />}
             </div>
             <div className="col-12 col-lg-4">
               <Recomendations />
@@ -49,6 +65,7 @@ TestPage.propTypes = {
 const mapStateToProps = (state) => {
   return {
     video: state.videos.video,
+    error: state.errors,
   };
 };
 

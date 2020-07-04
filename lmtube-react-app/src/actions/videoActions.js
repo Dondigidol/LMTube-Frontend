@@ -44,12 +44,16 @@ export const getVideo = (videoId) => async (dispatch) => {
     const res = await axios.get(
       `http://localhost:8080/lmtube/api/video/${videoId}`
     );
-    await dispatch({
-      type: GET_SELECTED_VIDEO,
-      payload: res.data,
-    });
+    if (res.data)
+      dispatch({
+        type: GET_SELECTED_VIDEO,
+        payload: res.data,
+      });
   } catch (err) {
-    console.log(err);
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
   }
 };
 

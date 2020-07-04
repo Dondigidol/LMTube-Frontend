@@ -13,7 +13,6 @@ class Recomendations extends React.Component {
     let videoId = this.props.videoId;
 
     if (videoId !== this.state.videoId) {
-      console.log(videoId);
       this.setState({
         videoId: videoId,
       });
