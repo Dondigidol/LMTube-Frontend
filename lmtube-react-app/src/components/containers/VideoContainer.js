@@ -43,7 +43,12 @@ class VideoContainer extends React.Component {
         </div>
         <small className="text-muted">
           <div className="d-inline">
-            Автор: {this.state.video.author.fullName}
+            Автор:{" "}
+            {this.state.video.author
+              ? this.state.video.author.fullName
+                ? this.state.video.author.fullName
+                : "Неизвестен"
+              : "Неизвестен"}
           </div>
           <div className="d-inline float-right">
             Загружено: {this.state.video.createdAt}

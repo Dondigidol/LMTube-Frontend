@@ -7,10 +7,10 @@ import classnames from "classnames";
 
 const pages = [
   // title, uri, is public?, searchingField
-  ["Главная", "/", true, true],
-  ["Мои видео", "/user-videos", false, false],
-  ["Загрузить", "/uploading", false, false],
-  ["Модерация", "/moderation", false, true],
+  ["Главная", "/", 0, true], // 0 - available to all users, 1 - for creater or highter, 2 - for moderators or highter, 3 - for admins
+  ["Мои видео", "/user-videos", 1, false],
+  ["Загрузить", "/uploading", 1, false],
+  ["Модерация", "/moderation", 2, true],
 ];
 
 class Header extends React.Component {
@@ -31,30 +31,49 @@ class Header extends React.Component {
   render() {
     const { validToken, user } = this.props.security;
     const curPath = window.location.pathname;
+    var accessLevel = 0;
+
+    switch (user.role) {
+      case "CREATOR":
+        accessLevel = 1;
+        break;
+      case "MODERATOR":
+        accessLevel = 2;
+        break;
+      case "ADMINISTRATOR":
+        accessLevel = 3;
+        break;
+    }
 
     const userIsAuthenticated = (
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav mr-auto">
-          {pages.map((item) => (
-            <li key={item[0]} className="nav-item">
-              {
-                <a
-                  className={classnames("nav-link", {
-                    "nav-link text-muted font-weight-lighter":
-                      item[1] !== curPath,
-                  })}
-                  href={item[1]}
-                >
-                  {item[0]}
-                </a>
-              }
-            </li>
-          ))}
+          {pages.map(
+            (page) =>
+              page[2] <= accessLevel && (
+                <li key={page[0]} className="nav-item">
+                  {
+                    <a
+                      className={classnames("nav-link", {
+                        "nav-link text-muted font-weight-lighter":
+                          page[1] !== curPath,
+                      })}
+                      href={page[1]}
+                    >
+                      {page[0]}
+                    </a>
+                  }
+                </li>
+              )
+          )}
         </ul>
         {this.state.searchEnabled && (
           <SearchForm searchingMethod={this.props.searchingMethod} />
         )}
-
+        <div className="text-info text-center ml-3 mr-3">
+          <div className="small">{user.fullName}</div>
+          <div className="small m-0 p-0">{user.role}</div>
+        </div>
         <div className="navbar-nav">
           <a
             className="nav-link text-muted font-weight-lighter"
@@ -71,18 +90,18 @@ class Header extends React.Component {
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav mr-auto">
           {pages.map(
-            (item) =>
-              item[2] && (
-                <li key={item[0]} className="nav-item">
+            (page) =>
+              page[2] === 0 && (
+                <li key={page[0]} className="nav-item">
                   {
                     <a
                       className={classnames("nav-link", {
                         "nav-link text-muted font-weight-lighter":
-                          item[1] !== curPath,
+                          page[1] !== curPath,
                       })}
-                      href={item[1]}
+                      href={page[1]}
                     >
-                      {item[0]}
+                      {page[0]}
                     </a>
                   }
                 </li>
