@@ -2,54 +2,52 @@ import React from "react";
 import VideoPreview from "../Elements/VideoPreview";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { getRecommendations } from "../../actions/videoActions";
 
 class Recomendations extends React.Component {
-  state = {
-    videoId: undefined,
-    videos: [],
-  };
+  constructor(props) {
+    super(props);
 
-  componentDidUpdate() {
-    let videoId = this.props.videoId;
-
-    if (videoId !== this.state.videoId) {
-      this.setState({
-        videoId: videoId,
-      });
-
-      this.getRecommendations();
-    }
+    this.state = {
+      video: {},
+      recommendations: [],
+    };
   }
 
-  getRecommendations = async () => {
-    const videoId = this.props.videoId;
-    const uri_api = await fetch(
-      `http://localhost:8080/lmtube/api/video/recommendations/${videoId}`
-    );
-    const videos = await uri_api.json();
-    this.setState({
-      videos: videos,
-    });
-  };
+  componentDidUpdate(newProps, oldProps) {
+    if (newProps.video) {
+      this.props.getRecommendations(newProps.video.id);
+    }
+  }
 
   render() {
     return (
       <div>
         <p className="breadcrumb breadcrumb-item active mt-3">Рекомендации</p>
-        {this.state.videos.map((video) => (
-          <div key={video.id} className="videoPreview">
-            <VideoPreview video={video} />
-          </div>
-        ))}
+        {this.state.recommendations
+          ? this.state.recommendations.map((recommendation) => (
+              <div key={recommendation.id} className="videoPreview">
+                <VideoPreview video={recommendation} />
+              </div>
+            ))
+          : ""}
       </div>
     );
   }
 }
 
+Recomendations.propTypes = {
+  getRecommendations: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  video: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = (state) => {
   return {
-    videoId: state.videos.video.id,
+    video: state.videos.video,
+    errors: state.errors,
+    recommendations: state.videos.recommendations,
   };
 };
 
-export default connect(mapStateToProps)(Recomendations);
+export default connect(mapStateToProps, { getRecommendations })(Recomendations);

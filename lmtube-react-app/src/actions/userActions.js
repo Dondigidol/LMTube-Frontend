@@ -3,6 +3,8 @@ import axios from "axios";
 import setJWTToken from "../securityUtils/setJWTToken";
 import jwt_decode from "jwt-decode";
 
+axios.defaults.baseURL = "http://p-lmplay-as01:8080/lmtube/api/";
+
 export const userAuthentication = (creditials) => async (dispatch) => {
   try {
     const params = {
@@ -14,11 +16,7 @@ export const userAuthentication = (creditials) => async (dispatch) => {
       username: creditials.username,
       password: creditials.password,
     };
-    const res = await axios.post(
-      "http://localhost:8080/lmtube/api/user/login",
-      data,
-      params
-    );
+    const res = await axios.post("/user/login", data, params);
 
     const { token } = res.data;
     localStorage.setItem("jwtToken", token);

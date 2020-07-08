@@ -1,4 +1,5 @@
 import React from "react";
+import { getPosterSrc } from "../../actions/videoActions";
 
 class Poster extends React.Component {
   state = {
@@ -13,7 +14,7 @@ class Poster extends React.Component {
 
   render() {
     const posterId = this.props.posterId;
-    const api_url = `http://localhost:8080/lmtube/api/poster/${posterId}`;
+    const api_url = getPosterSrc(posterId);
     return (
       <div
         ref={(cont) => (this.posterContainer = cont)}

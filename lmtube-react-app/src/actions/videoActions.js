@@ -1,5 +1,12 @@
-import { GET_ERRORS, GET_VIDEOS, GET_SELECTED_VIDEO } from "./types";
+import {
+  GET_ERRORS,
+  GET_VIDEOS,
+  GET_SELECTED_VIDEO,
+  GET_RECOMMENDATIONS,
+} from "./types";
 import axios from "axios";
+
+axios.defaults.baseURL = "http://p-lmplay-as01:8080/lmtube/api";
 
 export const uploadVideoDetails = (videoDetails, history) => async (
   dispatch
@@ -15,11 +22,7 @@ export const uploadVideoDetails = (videoDetails, history) => async (
         "Content-Type": "multipart/form-data",
       },
     };
-    await axios.post(
-      "http://localhost:8080/lmtube/api/video/upload",
-      formData,
-      params
-    );
+    await axios.post("/video/upload", formData, params);
     window.location.href = "/user-videos";
   } catch (err) {
     dispatch({
@@ -31,7 +34,7 @@ export const uploadVideoDetails = (videoDetails, history) => async (
 
 export const getVideos = (searchMask, availability) => async (dispatch) => {
   const res = await axios.get(
-    `http://localhost:8080/lmtube/api/video/videos?title=${searchMask}&available=${availability}`
+    `/video/videos?title=${searchMask}&available=${availability}`
   );
   dispatch({
     type: GET_VIDEOS,
@@ -41,9 +44,7 @@ export const getVideos = (searchMask, availability) => async (dispatch) => {
 
 export const getVideo = (videoId) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `http://localhost:8080/lmtube/api/video/${videoId}`
-    );
+    const res = await axios.get(`/video/${videoId}`);
     if (res.data)
       dispatch({
         type: GET_SELECTED_VIDEO,
@@ -58,7 +59,7 @@ export const getVideo = (videoId) => async (dispatch) => {
 };
 
 export const getUserVideos = () => async (dispatch) => {
-  const res = await axios.get("http://localhost:8080/lmtube/api/user/videos");
+  const res = await axios.get("/user/videos");
 
   dispatch({
     type: GET_VIDEOS,
@@ -68,7 +69,7 @@ export const getUserVideos = () => async (dispatch) => {
 
 export const setAvailability = (videoId, availability) => async (dispatch) => {
   const res = await axios.post(
-    `http://localhost:8080/lmtube/api/video/availability?id=${videoId}&available=${availability}`
+    `/video/availability?id=${videoId}&available=${availability}`
   );
   dispatch({
     type: GET_SELECTED_VIDEO,
@@ -78,14 +79,37 @@ export const setAvailability = (videoId, availability) => async (dispatch) => {
 
 export const getPosterSrc = (posterId) => {
   if (posterId) {
-    return `http://localhost:8080/lmtube/api/poster/${posterId}`;
+    return axios.defaults.baseURL + `/poster/${posterId}`;
   }
   return null;
 };
 
 export const getVideoSrc = (resolution, name) => {
   if (resolution && name) {
-    return `http://localhost:8080/lmtube/api/video/stream/${resolution}/${name}`;
+    return axios.defaults.baseURL + `/video/stream/${resolution}/${name}`;
   }
   return null;
+};
+
+export const getRecommendations = (videoId) => async (dispatch) => {
+  console.log(videoId);
+
+  try {
+    const res = await axios.get(
+      `http://localhost:8080/lmtube/api/video/recommendations/${videoId}`
+    );
+    console.log(res.data);
+
+    if (res.data) {
+      dispatch({
+        type: GET_RECOMMENDATIONS,
+        payload: res.data,
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
 };

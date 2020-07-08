@@ -70,7 +70,7 @@ class Header extends React.Component {
         {this.state.searchEnabled && (
           <SearchForm searchingMethod={this.props.searchingMethod} />
         )}
-        <div className="text-info text-center ml-3 mr-3">
+        <div className="text-muted text-center ml-3 mr-3">
           <div className="small">{user.fullName}</div>
           <div className="small m-0 p-0">{user.role}</div>
         </div>
