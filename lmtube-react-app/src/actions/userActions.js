@@ -3,7 +3,9 @@ import axios from "axios";
 import setJWTToken from "../securityUtils/setJWTToken";
 import jwt_decode from "jwt-decode";
 
-axios.defaults.baseURL = "http://p-lmplay-as01:8080/lmtube/api/";
+//axios.defaults.baseURL = "http://p-lmplay-as01:8080/lmtube/api/";
+
+axios.defaults.baseURL = "http://localhost:8080/lmtube/api";
 
 export const userAuthentication = (creditials) => async (dispatch) => {
   try {

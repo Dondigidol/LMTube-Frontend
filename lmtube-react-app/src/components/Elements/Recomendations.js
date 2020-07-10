@@ -13,7 +13,10 @@ class Recomendations extends React.Component {
   }
 
   componentDidUpdate(newProps) {
-    if (newProps.video !== this.state.video) {
+    if (
+      newProps.video !== this.state.video &&
+      newProps.video.id !== undefined
+    ) {
       this.setState({
         video: newProps.video,
       });

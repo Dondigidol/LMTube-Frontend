@@ -6,7 +6,9 @@ import {
 } from "./types";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://p-lmplay-as01:8080/lmtube/api";
+//axios.defaults.baseURL = "http://p-lmplay-as01:8080/lmtube/api";
+
+axios.defaults.baseURL = "http://localhost:8080/lmtube/api";
 
 export const uploadVideoDetails = (videoDetails, history) => async (
   dispatch

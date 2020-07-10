@@ -5,7 +5,12 @@ const PageNotFound = () => {
   return (
     <div>
       <Header />
-      Страница не найдена.
+      <div className="mt-3 row text-secondary">
+        <div className="my-auto col-12 text-center">
+          <p className="h4">Упс...</p>
+          Страница не найдена.
+        </div>
+      </div>
     </div>
   );
 };

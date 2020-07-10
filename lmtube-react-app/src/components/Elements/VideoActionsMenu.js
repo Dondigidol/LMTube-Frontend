@@ -22,7 +22,32 @@ class VideoActionsMenu extends React.Component {
     });
   };
 
+  getMenuItems(role) {
+    var menuItems = [];
+    switch (role) {
+      case "ADMINISTRATOR":
+      case "MODERATOR":
+        menuItems.push(
+          <Dropdown.Item>
+            <Availability />
+          </Dropdown.Item>
+        );
+      case "CREATOR":
+
+      default:
+        menuItems.push(
+          <Dropdown.Item onClick={this.showIframePopup}>
+            встроить видео
+          </Dropdown.Item>
+        );
+        break;
+    }
+    return menuItems;
+  }
+
   render() {
+    const menuItems = this.getMenuItems(this.props.user.role);
+
     return (
       <div>
         <IframePopup
@@ -38,12 +63,9 @@ class VideoActionsMenu extends React.Component {
             Меню
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ fontSize: "0.8em" }}>
-            <Dropdown.Item onClick={this.showIframePopup}>
-              встроить видео
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <Availability />
-            </Dropdown.Item>
+            {menuItems.map((menuItem, index, array) => (
+              <div key={index}>{menuItem}</div>
+            ))}
           </Dropdown.Menu>
         </Dropdown>
       </div>
