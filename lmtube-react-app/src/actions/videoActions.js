@@ -92,14 +92,10 @@ export const getVideoSrc = (resolution, name) => {
 };
 
 export const getRecommendations = (videoId) => async (dispatch) => {
-  console.log(videoId);
-
   try {
     const res = await axios.get(
-      `http://localhost:8080/lmtube/api/video/recommendations/${videoId}`
+      axios.defaults.baseURL + `/video/recommendations/${videoId}`
     );
-    console.log(res.data);
-
     if (res.data) {
       dispatch({
         type: GET_RECOMMENDATIONS,

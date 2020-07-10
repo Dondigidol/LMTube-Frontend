@@ -7,15 +7,16 @@ import { getRecommendations } from "../../actions/videoActions";
 class Recomendations extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       video: {},
-      recommendations: [],
     };
   }
 
-  componentDidUpdate(newProps, oldProps) {
-    if (newProps.video) {
+  componentDidUpdate(newProps) {
+    if (newProps.video !== this.state.video) {
+      this.setState({
+        video: newProps.video,
+      });
       this.props.getRecommendations(newProps.video.id);
     }
   }
@@ -24,13 +25,11 @@ class Recomendations extends React.Component {
     return (
       <div>
         <p className="breadcrumb breadcrumb-item active mt-3">Рекомендации</p>
-        {this.state.recommendations
-          ? this.state.recommendations.map((recommendation) => (
-              <div key={recommendation.id} className="videoPreview">
-                <VideoPreview video={recommendation} />
-              </div>
-            ))
-          : ""}
+        {this.props.recommendations.map((recommendation) => (
+          <div key={recommendation.id} className="videoPreview">
+            <VideoPreview video={recommendation} />
+          </div>
+        ))}
       </div>
     );
   }
@@ -40,6 +39,7 @@ Recomendations.propTypes = {
   getRecommendations: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   video: PropTypes.object.isRequired,
+  recommendations: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => {
