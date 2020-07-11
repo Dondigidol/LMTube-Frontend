@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "../Elements/Header";
 import { uploadVideoDetails } from "../../actions/videoActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -51,7 +50,7 @@ class UploadVideoContainer extends Component {
     return (
       <div>
         <div className="container">
-          <h4 className="display-4 text-center">Загрузка видео</h4>
+          <p className="h4 text-center text-secondary">Загрузка видео</p>
           <form
             className="text-left col-8 offset-2"
             onSubmit={this.submitForm}
@@ -84,6 +83,7 @@ class UploadVideoContainer extends Component {
                 name="description"
                 id="description"
                 onChange={this.onChange}
+                rows="5"
               ></textarea>
               {errors.description && (
                 <div className="invalid-feedback">{errors.description}</div>

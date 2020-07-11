@@ -1,0 +1,7 @@
+var ROLES = {
+  ADMINISTRATOR: "ADMINISTRATOR",
+  MODERATOR: "MODERATOR",
+  CREATOR: "CREATOR",
+};
+
+export default ROLES;

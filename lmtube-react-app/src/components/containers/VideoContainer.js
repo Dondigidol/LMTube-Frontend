@@ -30,7 +30,7 @@ class VideoContainer extends React.Component {
           <Video />
         </div>
 
-        {!this.state.video.available && (
+        {!this.props.video.available && (
           <div className="alert alert-warning">
             В настоящее время видео снято с пуликации.
           </div>

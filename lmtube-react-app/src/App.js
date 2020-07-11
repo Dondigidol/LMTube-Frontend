@@ -21,6 +21,7 @@ import Moderation from "./components/pages/Moderation";
 import PageNotFound from "./components/pages/PageNotFound";
 import UploadVideoPage from "./components/pages/UploadVideoPage";
 import TestPage from "./components/pages/TestPage";
+import EditVideoPage from "./components/pages/EditVideoPage";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -57,6 +58,7 @@ class App extends React.Component {
               <Route exact path="/uploading" component={UploadVideoPage} />
               <Route exact path="/user-videos" component={UserVideoPage} />
               <Route exact path="/moderation" component={Moderation} />
+              <Route exact path="/edit/:videoId" component={EditVideoPage} />
               <Route exact path="/test/:videoId" component={TestPage} />
               <Route exact path="/404" component={PageNotFound} />
               <Redirect from="*" to="/404" />

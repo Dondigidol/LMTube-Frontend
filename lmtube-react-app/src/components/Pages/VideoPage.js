@@ -45,7 +45,11 @@ class TestPage extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-12 col-lg-8">
-              {errorMessage ? <NoVideoContainer /> : <VideoContainer />}
+              {errorMessage ? (
+                <NoVideoContainer />
+              ) : (
+                this.props.video.id && <VideoContainer />
+              )}
             </div>
             <div className="col-12 col-lg-4">
               <Recomendations />

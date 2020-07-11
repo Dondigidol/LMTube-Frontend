@@ -24,7 +24,7 @@ export const uploadVideoDetails = (videoDetails, history) => async (
         "Content-Type": "multipart/form-data",
       },
     };
-    await axios.post("/video/upload", formData, params);
+    axios.post("/video/upload", formData, params);
     window.location.href = "/user-videos";
   } catch (err) {
     dispatch({
@@ -104,6 +104,31 @@ export const getRecommendations = (videoId) => async (dispatch) => {
         payload: res.data,
       });
     }
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
+};
+
+export const editVideo = (videoId, title, description) => async (dispatch) => {
+  try {
+    const data = {
+      id: videoId,
+      title: title,
+      description: description,
+    };
+
+    const params = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    await axios.post("/video/edit", data, params);
+
+    window.location.href = `/video/${videoId}`;
   } catch (err) {
     dispatch({
       type: GET_ERRORS,

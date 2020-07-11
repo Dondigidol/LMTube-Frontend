@@ -43,6 +43,8 @@ class Header extends React.Component {
       case "ADMINISTRATOR":
         accessLevel = 3;
         break;
+      default:
+        break;
     }
 
     const userIsAuthenticated = (
