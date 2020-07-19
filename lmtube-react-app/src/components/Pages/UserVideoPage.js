@@ -14,8 +14,8 @@ class UserVideoPage extends React.Component {
     this.props.getUserVideos();
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.videos) {
+  componentDidUpdate(newProps) {
+    if (newProps.videos && newProps.videos !== this.state.videos) {
       this.setState({
         videos: newProps.videos,
       });

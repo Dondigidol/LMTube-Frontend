@@ -2,7 +2,6 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import axios from "axios";
 
 const IframePopup = (props) => {
   const iframeText =
@@ -10,7 +9,7 @@ const IframePopup = (props) => {
     "title='" +
     props.video.title +
     "' " +
-    "src='http://localhost:3000/embed/" +
+    `src='${window.location.origin}/embed/` +
     props.video.id +
     "' " +
     "frameBorder='0' " +

@@ -5,24 +5,8 @@ import Plyr from "plyr";
 import { getPosterSrc, getVideoSrc } from "../../actions/videoActions";
 
 class Video extends React.Component {
-  state = {
-    video: undefined,
-  };
-
-  shouldComponentUpdate(newProps, oldProps) {
-    console.log(newProps.video);
-    console.log(oldProps.video);
-    if (newProps.video !== oldProps.video && this.state.video === undefined) {
-      this.setState({
-        video: newProps.video,
-      });
-      this.createPlayer(newProps.video);
-      return true;
-    }
-    return false;
-  }
-
-  createPlayer(video) {
+  createPlayer() {
+    const video = this.props.video;
     let posterSrc = getPosterSrc(video.poster.id);
     let streams = [];
     video.videos.forEach((video) => {
@@ -69,8 +53,11 @@ class Video extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.createPlayer();
+  }
+
   render() {
-    this.createPlayer(this.props.video);
     return (
       <div>
         <video id="player" preload="auto" controls width="auto" height="100%" />

@@ -28,14 +28,24 @@ class EditVideoPage extends React.Component {
       titleIsEdited: false,
       descriptionIsEdited: false,
       errors: {},
+      video: undefined,
     };
 
     this.title = React.createRef();
     this.description = React.createRef();
   }
 
-  componentDidUpdate(newProps, oldProps) {
-    if (newProps !== oldProps && newProps.video.id !== undefined) {
+  shouldComponentUpdate(newProps, newState) {
+    if (newProps.video && newProps.video !== newState.video) {
+      this.setState({
+        video: newProps.video,
+      });
+    }
+    return true;
+  }
+
+  componentDidUpdate(newProps) {
+    if (newProps.video.id) {
       if (
         newProps.user.role === roles.CREATOR &&
         newProps.video.author.username !== newProps.user.username
@@ -63,8 +73,6 @@ class EditVideoPage extends React.Component {
       }
     }
   }
-
-  componentDidMount() {}
 
   onChange = (e) => {
     this.setState({

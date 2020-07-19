@@ -5,28 +5,16 @@ import PropTypes from "prop-types";
 import { getRecommendations } from "../../actions/videoActions";
 
 class Recomendations extends React.Component {
-  state = {
-    video: {},
-    errors: {},
-  };
-  componentDidUpdate(newProps) {
-    if (newProps.video.id && newProps.video.id !== this.state.video.id) {
-      this.setState({
-        video: newProps.video,
-      });
-      this.props.getRecommendations(newProps.video.id);
-    } else if (
-      newProps.errors.message &&
-      newProps.errors.message !== this.state.errors.message
-    ) {
-      this.setState({
-        errors: newProps.errors,
-      });
-      this.props.getRecommendations(-1);
-    }
-  }
-
   render() {
+    const newVideo = this.props.video;
+    if (newVideo !== this.video) {
+      this.video = newVideo;
+      if (newVideo.id) {
+        this.props.getRecommendations(newVideo.id);
+      } else {
+        this.props.getRecommendations(-1);
+      }
+    }
     return (
       <div>
         <p className="breadcrumb breadcrumb-item active mt-3">Рекомендации</p>

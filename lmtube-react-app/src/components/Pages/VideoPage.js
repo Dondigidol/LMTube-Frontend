@@ -20,7 +20,6 @@ class TestPage extends React.Component {
 
   render() {
     const errorMessage = this.props.error.message;
-    const video = this.props.video;
     return (
       <div>
         <Header />
