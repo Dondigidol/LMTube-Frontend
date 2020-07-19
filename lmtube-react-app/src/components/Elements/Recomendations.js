@@ -5,22 +5,24 @@ import PropTypes from "prop-types";
 import { getRecommendations } from "../../actions/videoActions";
 
 class Recomendations extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      video: {},
-    };
-  }
-
+  state = {
+    video: {},
+    errors: {},
+  };
   componentDidUpdate(newProps) {
-    if (
-      newProps.video !== this.state.video &&
-      newProps.video.id !== undefined
-    ) {
+    if (newProps.video.id && newProps.video.id !== this.state.video.id) {
       this.setState({
         video: newProps.video,
       });
       this.props.getRecommendations(newProps.video.id);
+    } else if (
+      newProps.errors.message &&
+      newProps.errors.message !== this.state.errors.message
+    ) {
+      this.setState({
+        errors: newProps.errors,
+      });
+      this.props.getRecommendations(-1);
     }
   }
 

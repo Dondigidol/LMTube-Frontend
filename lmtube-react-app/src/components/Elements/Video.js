@@ -6,22 +6,23 @@ import { getPosterSrc, getVideoSrc } from "../../actions/videoActions";
 
 class Video extends React.Component {
   state = {
-    posterSrc: "",
-    videoStreams: [],
-    video: {},
+    video: undefined,
   };
 
-  componentDidUpdate() {
-    let video = this.props.video;
-    if (video.id !== this.state.video.id) {
+  shouldComponentUpdate(newProps, oldProps) {
+    console.log(newProps.video);
+    console.log(oldProps.video);
+    if (newProps.video !== oldProps.video && this.state.video === undefined) {
       this.setState({
-        video: video,
+        video: newProps.video,
       });
-      this.createPlayer(video);
+      this.createPlayer(newProps.video);
+      return true;
     }
+    return false;
   }
 
-  createPlayer = (video) => {
+  createPlayer(video) {
     let posterSrc = getPosterSrc(video.poster.id);
     let streams = [];
     video.videos.forEach((video) => {
@@ -53,7 +54,6 @@ class Video extends React.Component {
       hideControls: true,
       fullscreen: {
         enabled: true,
-        fallback: true,
       },
     });
 
@@ -67,11 +67,14 @@ class Video extends React.Component {
     player.quality = {
       default: "480",
     };
-  };
+  }
 
   render() {
+    this.createPlayer(this.props.video);
     return (
-      <video id="player" preload="auto" controls width="auto" height="100%" />
+      <div>
+        <video id="player" preload="auto" controls width="auto" height="100%" />
+      </div>
     );
   }
 }

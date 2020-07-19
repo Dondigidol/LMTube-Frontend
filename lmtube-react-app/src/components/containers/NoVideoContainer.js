@@ -20,10 +20,10 @@ class NoVideoContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div
           ref={this.cont}
-          className="mt-3 row text-secondary"
+          className="row text-secondary"
           style={{
             height: this.state.clientWidth * 0.56,
           }}

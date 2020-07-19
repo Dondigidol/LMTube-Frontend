@@ -5,24 +5,6 @@ import Video from "../Elements/Video";
 import VideoActionsMenu from "../Elements/VideoActionsMenu";
 
 class VideoContainer extends React.Component {
-  state = {
-    video: {
-      author: {},
-    },
-  };
-
-  componentDidUpdate() {
-    let video = this.props.video;
-    if (
-      video.id !== this.state.video.id ||
-      video.available !== this.state.video.available
-    ) {
-      this.setState({
-        video: video,
-      });
-    }
-  }
-
   render() {
     return (
       <div className="col-sm-12 pt-3">
@@ -39,25 +21,25 @@ class VideoContainer extends React.Component {
         <VideoActionsMenu />
 
         <div>
-          <h4>{this.state.video.title}</h4>
+          <h4>{this.props.video.title}</h4>
         </div>
         <small className="text-muted">
           <div className="d-inline">
             Автор:{" "}
-            {this.state.video.author
-              ? this.state.video.author.fullName
-                ? this.state.video.author.fullName
+            {this.props.video.author
+              ? this.props.video.author.fullName
+                ? this.props.video.author.fullName
                 : "Неизвестен"
               : "Неизвестен"}
           </div>
           <div className="d-inline float-right">
-            Загружено: {this.state.video.createdAt}
+            Загружено: {this.props.video.createdAt}
           </div>
 
-          <div>Просмотров: {this.state.video.views}</div>
+          <div>Просмотров: {this.props.video.views}</div>
         </small>
         <hr />
-        <div className="">{this.state.video.description}</div>
+        <div className="">{this.props.video.description}</div>
       </div>
     );
   }

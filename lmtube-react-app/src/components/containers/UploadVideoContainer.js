@@ -13,16 +13,7 @@ class UploadVideoContainer extends Component {
       description: "",
       videoFile: {},
       posterFile: {},
-      errors: {},
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors,
-      });
-    }
   }
 
   submitForm = (e) => {
@@ -45,8 +36,8 @@ class UploadVideoContainer extends Component {
   };
 
   render() {
-    const { errors } = this.state;
-
+    //const { errors } = this.state;
+    const errors = this.props.errors;
     return (
       <div>
         <div className="container">

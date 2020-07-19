@@ -5,9 +5,7 @@ import rootReducer from "./reducers/rootReducer";
 const initialState = {};
 const middleware = [thunk];
 
-let store = {
-  
-};
+let store = {};
 
 if (window.navigator.userAgent.includes("Chrome")) {
   store = createStore(

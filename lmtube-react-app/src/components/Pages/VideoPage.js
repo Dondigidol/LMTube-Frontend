@@ -13,32 +13,14 @@ class TestPage extends React.Component {
 
     const videoId = this.props.match.params.videoId;
 
-    this.state = {
-      videoId: videoId,
-      video: {},
-      error: {},
-    };
-
     if (videoId !== undefined) {
       this.props.getVideo(videoId);
     }
   }
 
-  componentDidUpdate = (newProps, oldProps) => {
-    if (newProps.error.message !== oldProps.error.message) {
-      this.setState({
-        error: newProps.error,
-      });
-    }
-    if (newProps.video.id !== oldProps.video.id) {
-      this.setState({
-        video: newProps.video,
-      });
-    }
-  };
-
   render() {
-    const errorMessage = this.state.error.message;
+    const errorMessage = this.props.error.message;
+    const video = this.props.video;
     return (
       <div>
         <Header />

@@ -9,6 +9,8 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
     "classnames": "^2.2.6",
+    "express": "^4.17.1",
+    "http-server": "^0.12.3",
     "jwt-decode": "^2.2.0",
     "plyr": "^3.6.2",
     "prop-types": "^15.7.2",
@@ -22,7 +24,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "serve": "^11.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -46,6 +49,10 @@
     ]
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "envify": "^4.1.0",
+    "prettier": "2.0.5",
+    "terser": "^4.8.0",
+    "terser-brunch": "^4.0.0",
+    "uglifyify": "^5.0.2"
   }
 }

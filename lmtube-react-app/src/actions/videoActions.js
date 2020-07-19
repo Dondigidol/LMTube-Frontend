@@ -6,9 +6,9 @@ import {
 } from "./types";
 import axios from "axios";
 
-//axios.defaults.baseURL = "http://p-lmplay-as01:8080/lmtube/api";
+axios.defaults.baseURL = "http://p-lmplay-as01:8080/lmplay/api";
 
-axios.defaults.baseURL = "http://localhost:8080/lmtube/api";
+//axios.defaults.baseURL = "http://localhost:8080/lmplay/api";
 
 export const uploadVideoDetails = (videoDetails, history) => async (
   dispatch
@@ -24,7 +24,7 @@ export const uploadVideoDetails = (videoDetails, history) => async (
         "Content-Type": "multipart/form-data",
       },
     };
-    axios.post("/video/upload", formData, params);
+    await axios.post("/video/upload", formData, params);
     window.location.href = "/user-videos";
   } catch (err) {
     dispatch({
