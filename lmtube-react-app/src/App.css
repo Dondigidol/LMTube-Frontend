@@ -18,3 +18,21 @@
   position: absolute;
   top: 50%;
 }
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(169, 169, 169, 0.5);
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+}
+
+.loader-spinner {
+  position: absolute;
+  height: 5rem;
+  width: 5rem;
+  top: calc(50% - 2.5rem);
+  left: calc(50% - 2.5rem);
+}

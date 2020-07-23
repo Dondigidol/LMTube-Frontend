@@ -14,9 +14,13 @@ const pages = [
 ];
 
 class Header extends React.Component {
-  state = {
-    searchEnabled: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchEnabled: false,
+    };
+    this.menu = React.createRef();
+  }
 
   componentDidMount = () => {
     const path = window.location.pathname;
@@ -26,6 +30,15 @@ class Header extends React.Component {
           searchEnabled: true,
         });
     });
+  };
+
+  menuButtonClick = () => {
+    const menu = this.menu.current;
+    if (menu.style.display === "" || menu.style.display === "none") {
+      menu.style.display = "block";
+    } else if (menu.style.display === "block") {
+      menu.style.display = "";
+    }
   };
 
   render() {
@@ -48,7 +61,11 @@ class Header extends React.Component {
     }
 
     const userIsAuthenticated = (
-      <div className="collapse navbar-collapse">
+      <div
+        className="collapse navbar-collapse"
+        id="navbarSupportedContent"
+        ref={this.menu}
+      >
         <ul className="navbar-nav mr-auto">
           {pages.map(
             (page) =>
@@ -56,7 +73,7 @@ class Header extends React.Component {
                 <li key={page[0]} className="nav-item">
                   {
                     <a
-                      className={classnames("nav-link", {
+                      className={classnames("nav-link active", {
                         "nav-link text-muted font-weight-lighter":
                           page[1] !== curPath,
                       })}
@@ -72,24 +89,15 @@ class Header extends React.Component {
         {this.state.searchEnabled && (
           <SearchForm searchingMethod={this.props.searchingMethod} />
         )}
-        <div className="text-muted text-center ml-3 mr-3">
-          <div className="small">{user.fullName}</div>
-          <div className="small m-0 p-0">{user.role}</div>
-        </div>
-        <div className="navbar-nav">
-          <a
-            className="nav-link text-muted font-weight-lighter"
-            href="/"
-            onClick={() => this.props.userLogout()}
-          >
-            Выйти
-          </a>
-        </div>
       </div>
     );
 
     const userNotAuthenticated = (
-      <div className="collapse navbar-collapse">
+      <div
+        className="collapse navbar-collapse"
+        id="navbarSupportedContent"
+        ref={this.menu}
+      >
         <ul className="navbar-nav mr-auto">
           {pages.map(
             (page) =>
@@ -97,7 +105,7 @@ class Header extends React.Component {
                 <li key={page[0]} className="nav-item">
                   {
                     <a
-                      className={classnames("nav-link", {
+                      className={classnames("nav-link active", {
                         "nav-link text-muted font-weight-lighter":
                           page[1] !== curPath,
                       })}
@@ -113,16 +121,6 @@ class Header extends React.Component {
         {this.state.searchEnabled && (
           <SearchForm searchingMethod={this.props.searchingMethod} />
         )}
-        <div className="navbar-nav">
-          <a
-            className={classnames("nav-link", {
-              "nav-link text-muted font-weight-lighter": "/login" !== curPath,
-            })}
-            href="/login"
-          >
-            Войти
-          </a>
-        </div>
       </div>
     );
 
@@ -135,12 +133,56 @@ class Header extends React.Component {
     }
 
     return (
-      <nav className="navbar navbar-expand navbar-light header-bg-color">
-        <a className="navbar-brand" href="/">
-          LMPlay
-        </a>
-        {headerLinks}
-      </nav>
+      <div>
+        <nav className="navbar navbar-expand-lg navbar-light header-bg-color">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            onClick={this.menuButtonClick}
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <a className="navbar-brand" href="/">
+            LMPlay
+          </a>
+
+          {headerLinks}
+          {validToken ? (
+            <div className="navbar-expand">
+              <div className="inline-block float-left text-muted text-center ml-3 mr-3">
+                <div className="small">{user.fullName}</div>
+                <div className="small m-0 p-0">{user.role}</div>
+              </div>
+              <div className="inline-block float-right">
+                <a
+                  className="nav-link text-muted font-weight-lighter"
+                  href="/"
+                  onClick={() => this.props.userLogout()}
+                >
+                  Выйти
+                </a>
+              </div>
+            </div>
+          ) : (
+            <div className="navbar-nav">
+              <a
+                className={classnames("nav-link active", {
+                  "nav-link text-muted font-weight-lighter":
+                    "/login" !== curPath,
+                })}
+                href="/login"
+              >
+                Войти
+              </a>
+            </div>
+          )}
+        </nav>
+      </div>
     );
   }
 }
