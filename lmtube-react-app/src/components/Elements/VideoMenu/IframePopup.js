@@ -9,7 +9,7 @@ const IframePopup = (props) => {
     "title='" +
     props.video.title +
     "' " +
-    `src='${window.location.origin}/embed/` +
+    `src='${window.location.protocol}//lmplay.hq.ru.corp.leroymerlin.com:${window.location.port}/embed/` +
     props.video.id +
     "' " +
     "frameBorder='0' " +
